@@ -24,6 +24,7 @@ class Card:
         self.clicked = False
         self.being_clicked = False
         self.selected = False
+        self.card_outline = red
         self.mouse_click = pygame.mouse.get_pressed()[0]
     
     # def collision(self, mouse_position):
@@ -38,9 +39,34 @@ class Card:
     def draw_card(self, color, stroke):
             pygame.draw.rect(self.surface, color, (self.x, self.y, self.width, self.height), stroke)
 
-    def draw_flip(self, stroke = 0):
+    def draw_flip(self, shape, shape_color, stroke = 2):
+        self.shape = shape
+        self.shape_color = shape_color
+        ########################### RECTANGLE SHAPE ########################
+        # Defines the size of the rectangle
+        self.rect_size = self.height / 3
+        # Defines the center (x,y) of the rectangle
+        self.Xc_rect = (self.x + self.width/2) - (self.x + self.rect_size/2)
+        self.Yc_rect = (self.y + self.height/2) - (self.y + self.rect_size/2)
+        self.rect_x = self.x + self.Xc_rect
+        self.rect_y = self.y + self.Yc_rect
+        ####################################################################
+        ########################### CIRCLE SHAPE ###########################
+        self.circle_radius = int(self.width/2 - self.width/4)
+        self.circle_x = int(self.x  + self.width/2)
+        self.circle_y =  int(self.y + self.height/2)
+        ####################################################################
+        ########################### CIRCLE SHAPE ###########################
+
+
+
         if self.selected:
-            pygame.draw.rect(self.surface, self.random_color, (self.x, self.y, self.width, self.height), stroke)
+            if shape == 'square':
+                pygame.draw.rect(self.surface, self.shape_color, (self.rect_x, self.rect_y, self.rect_size, self.rect_size), 2)
+            
+            elif shape == 'circle':
+                pygame.draw.circle(self.surface, self.shape_color, (self.circle_x,self.circle_y ), self.circle_radius, 2)
+
 
     
     
