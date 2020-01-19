@@ -3,8 +3,8 @@ import random
 from colors import *
 
 pygame.init()
-display_width = 1440
-display_height = 900
+display_width = 1220
+display_height = 700
 gameDisplay = pygame.display.set_mode([display_width, display_height])
 
 
@@ -12,46 +12,41 @@ gameDisplay = pygame.display.set_mode([display_width, display_height])
 white = [255, 255, 255]
 class Card:
 
-    def __init__(self, width, height, x, y, color, surface, stroke):
+    def __init__(self, width, height, x, y, color):
         self.width = width
         self.height = height
         self.x = x 
         self.y = y
         self.color = color
         self.random_color = random.choice([red, blue, pink])
-        self.surface = surface
-        self.stroke = stroke
+        self.surface = gameDisplay
         self.clickable = True
         self.clicked = False
         self.being_clicked = False
         self.selected = False
-        self.mouse_position = pygame.mouse.get_pos()
         self.mouse_click = pygame.mouse.get_pressed()[0]
     
     # def collision(self, mouse_position):
     #     if (self.x + self.width > mouse_position[0] > self.x and self.y + self.height > mouse_position[1] > self.y):
     #         print("colides")
-    def collision(self):
-        if self.x + self.width > self.mouse_position[0] > self.x and self.y + self.height > self.mouse_position[1] > self.y:
+    def collision(self, mouse):
+        if self.x + self.width > mouse[0] > self.x and self.y + self.height > mouse[1] > self.y:
             return True
         else:
             return False
 
-    def draw_card(self):
-        if self.collision() == True:
-            pygame.draw.rect(self.surface, white, (self.x, self.y, self.width, self.height), self.stroke)
-        else:
-            pygame.draw.rect(self.surface, self.color, (self.x, self.y, self.width, self.height), self.stroke)
+    def draw_card(self, color, stroke):
+            pygame.draw.rect(self.surface, color, (self.x, self.y, self.width, self.height), stroke)
 
-    def draw_flip(self):
+    def draw_flip(self, stroke = 0):
         if self.selected:
-            pygame.draw.rect(self.surface, self.random_color, (self.x, self.y, self.width, self.height), self.stroke)
+            pygame.draw.rect(self.surface, self.random_color, (self.x, self.y, self.width, self.height), stroke)
 
     
     
     
-    def button(self):
-        if self.collision() == 1 and self.mouse_click == 1:
+    def button(self, mouse):
+        if self.collision(mouse) == True and self.mouse_click == 1:
             return 1
         else:
             return 0
