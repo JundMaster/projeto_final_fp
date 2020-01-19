@@ -1,4 +1,3 @@
-import pyautogui
 import pygame
 from Card_class import *
 from game_mode import level1
@@ -33,7 +32,6 @@ def game_menu():
         text1.draw_text("text", text1.x, text1.y)
 
         if menu_gm1.button() == 1:
-            print("it works?")
             gameDisplay.fill(background_color)
             level1()
             gameDisplay.fill(background_color)

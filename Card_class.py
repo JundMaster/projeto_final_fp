@@ -18,7 +18,7 @@ class Card:
         self.x = x 
         self.y = y
         self.color = color
-        self.random_color = random.choice([red, blue, yellow])
+        self.random_color = random.choice([red, blue, pink])
         self.surface = surface
         self.stroke = stroke
         self.clickable = True
@@ -38,7 +38,7 @@ class Card:
             return False
 
     def draw_card(self):
-        if self.collision() == 1:
+        if self.collision() == True:
             pygame.draw.rect(self.surface, white, (self.x, self.y, self.width, self.height), self.stroke)
         else:
             pygame.draw.rect(self.surface, self.color, (self.x, self.y, self.width, self.height), self.stroke)

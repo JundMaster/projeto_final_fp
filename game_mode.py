@@ -56,17 +56,17 @@ def level1():
     fliped_cards_num = 0
     flips = 0
     fliped_cards_list = []
-    # card1 = Card(card_width, card_height, card_center_x, card_center_y, green, gameDisplay, 0)
-    # card2 = Card(card_width, card_height, card1.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
-    # card3 = Card(card_width, card_height, card2.x + card_width + card_dist, card_center_y, yellow, gameDisplay, 0)
-    # card4 = Card(card_width, card_height, card3.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
-    # card_list = [card1, card2, card3, card4]
+    card1 = Card(card_width, card_height, card_center_x, card_center_y, green, gameDisplay, 0)
+    card2 = Card(card_width, card_height, card1.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
+    card3 = Card(card_width, card_height, card2.x + card_width + card_dist, card_center_y, yellow, gameDisplay, 0)
+    card4 = Card(card_width, card_height, card3.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
+    card_list = [card1, card2, card3, card4]
     while not done:
-        card1 = Card(card_width, card_height, card_center_x, card_center_y, green, gameDisplay, 0)
-        card2 = Card(card_width, card_height, card1.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
-        card3 = Card(card_width, card_height, card2.x + card_width + card_dist, card_center_y, yellow, gameDisplay, 0)
-        card4 = Card(card_width, card_height, card3.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
-        card_list = [card1, card2, card3, card4]
+        # card1 = Card(card_width, card_height, card_center_x, card_center_y, green, gameDisplay, 0)
+        # card2 = Card(card_width, card_height, card1.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
+        # card3 = Card(card_width, card_height, card2.x + card_width + card_dist, card_center_y, yellow, gameDisplay, 0)
+        # card4 = Card(card_width, card_height, card3.x + card_width + card_dist, card_center_y, green, gameDisplay, 0)
+        # card_list = [card1, card2, card3, card4]
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()[0]
 
@@ -97,18 +97,17 @@ def level1():
                
                     else:     
                         card.draw_card()
-
-                else:
+                
                     
-                    if fliped_cards_num == 2:
-                        printf("passa pra false")
-                        card.selected = False
-                        continue
+                if card.selected == True:
+                    if fliped_cards_num == 1:
+                        # card.selected = False
+                        # continue
                    
-                    card.draw_flip()
-
-                    if card.collision():
-                        card.draw_card()
+                        card.draw_flip()
+                    print("card.selected", str(card.selected))
+                    # if card.collision():
+                    #     card.draw_card()
                 # print("card.selected: ", str(card_list[0].selected))
                 # print("card.collision: ", str(card_list[0].collision())) 
                 # print("fliped_cards_num: ", str(fliped_cards_num))
