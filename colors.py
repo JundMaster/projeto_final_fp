@@ -1,0 +1,7 @@
+background_color = [0, 0, 20]
+black = [0, 0, 0]
+red = [255, 0, 0]
+green = [0, 200, 0]
+blue = [0, 0, 200]
+yellow = [255, 226, 0]
+white = [255, 255, 255]
