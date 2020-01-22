@@ -20,24 +20,6 @@ card_dist = 10
 display_center_x = display_width - display_width/2
 display_center_y = display_height - display_height/2
 
-
-# card_x_1 = card_x
-# for i in range(10): # number of cards on the horizontal
-#     card_x_1 = card_x_1 + card_width + card_dist
-#     i += 1
-
-# card_x_1 = card_x_1/2  
-
-# card_center_x = display_center_x - card_x_1
-
-# card_y_1 = card_y
-# for i in range(3): # number of cards on the vertical
-#     card_y_1 = card_y_1 + card_height + card_dist
-#     i += 1
-
-# card_y_1 = card_y_1/2  
-# card_center_y = display_center_y - card_y_1
-
 def card_check(card1, card2):
     if (card1.shape == card2.shape) and (card1.shape_color == card2.shape_color):
         return True
@@ -57,7 +39,7 @@ def in_game(cards_hor, cards_vert):
     card_x_1 = card_x                                       
     for i in range(cards_hor): # number of cards on the horizontal
         card_x_1 = card_x_1 + card_width + card_dist
-        i += 1
+        
 
     card_x_1 = card_x_1/2  
 
@@ -66,7 +48,7 @@ def in_game(cards_hor, cards_vert):
     card_y_1 = card_y
     for i in range(cards_vert): # number of cards on the vertical
         card_y_1 = card_y_1 + card_height + card_dist
-        i += 1
+        
 
     card_y_1 = card_y_1/2  
     card_center_y = display_center_y - card_y_1
@@ -74,7 +56,7 @@ def in_game(cards_hor, cards_vert):
 
 
     shape_list = ['square','circle', 'circle', 'square']
-    shape_color = [red, blue, red, blue]
+    shape_color = [red, blue, red, blue, green, green]
     random.shuffle(shape_list)
     random.shuffle(shape_color)
     score = 0
