@@ -1,6 +1,6 @@
 import pygame
 from Card_class import *
-from game_mode import level1
+from game_mode import in_game
 from colors import *
 
 pygame.init()
@@ -17,31 +17,69 @@ clock = pygame.time.Clock()
 def game_menu():
     done = False
     while not done:
-        # width, height, x, y, color, surface, stroke
-        menu_gm1 = Card(display_width/10, display_height/20, display_width/2 - (display_width/10)/2 , display_height/2 + (display_height/20)/2, yellow)
-        menu_gm2 = Card(display_width/10, display_height/20, display_width/2 - (display_width/10)/2 , display_height/2 + menu_gm1.height*2, yellow)
-        text1 = OptionText(menu_gm1.width, menu_gm1.height, menu_gm1.x, menu_gm1.y, white)
+        # setting the dimensions and position of the buttons
+        button_width = display_width/10
+        button_height = display_height/20
+        button_x = display_width/2 - (display_width/10)/2
+        button_y = display_height/2 + (display_height/20)/6 # location of the first button on Y axis
+        # button_y = 20 
+        # sets the distance between the buttons except for the last one, the 'EXIT' button
+        dist_modifier = 1.2
+
+        # list with each button text
+        game_mode = ['4 x 3', '4 x 4', '5 x 4', '6 x 4', '6 x 5', '6 x 6',' EXIT ']
+        game_mode_list = [[4, 3], (4, 4), (5, 4), (6, 4), (6, 5), (6, 6)]
+        # empty list that will contain each button with it respective text
+        button_set = []
+        # the loop appends the buttons to the button_set 
+        for i in range (0, len(game_mode)):
+            # creates the first button
+            if i == 0:
+                button_set.append(Card(button_width, button_height, button_x, button_y, game_mode[0]))
+            # creates the rest of the buttons, except for the last one
+            if i > 0 and i < len(game_mode) - 1:
+                button_set.append(Card(button_width, button_height, button_x, button_set[i - 1].y + button_set[i - 1].height*dist_modifier , game_mode[i]))
+           
+            # creates the last button, wich will be the 'EXIT'
+            if i == len(game_mode) - 1:
+                button_set.append(Card(button_width, button_height, button_x, button_set[i - 1].y + button_set[i - 1].height*dist_modifier*1.5 , game_mode[i]))
+                
+                if button_set[i].y + button_set[i].height>= display_height:
+                    print("------------------------------ E R R O R ------------------------------\nThe ammout of buttons excedes the display height")
+                    print("Try either repositioning the button set or creating less buttons\n-----------------------------------------------------------------------")
+                    pygame.quit()
+                    exit()
+        # gets the position of the mouse
         mouse = pygame.mouse.get_pos()
+        # gets the MB1 (mouse left button)click
+        click = pygame.mouse.get_pressed()[0]
 
-        # print("mouse: ", str(mouse[0]), ", ", str(mouse[1]))
-
+        # checks the exit conditions for the game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    done = True
+                        
+            # Draw the whole button set
+            for button in button_set:
 
-        if menu_gm1.collision(mouse) == False:
-            menu_gm1.draw_card(yellow, 2)
-        else:
-            menu_gm1.draw_card(white, 2)
+                if button.collision(mouse) == True:
+                    button_color = white
+                else:
+                    button_color = yellow
+                button.draw_text(button_color)
+                button.draw_card(button_color, 2)
 
-        menu_gm2.draw_card(yellow, 2)
-        text1.draw_text("text", text1.x, text1.y)
+        for i in range (0, len(game_mode_list)):
+            if button_set[i].button(mouse) == 1:
+                in_game(int(game_mode[i][0]),int(game_mode[i][-1]))
+                gameDisplay.fill(background_color)
 
-        if menu_gm1.button(mouse) == 1:
-            gameDisplay.fill(background_color)
-            level1()
-            gameDisplay.fill(background_color)
-            
+        # check if the 'EXIT' button was clicked and closes the game 
+        if button_set[-1].button(mouse) == 1:
+            done = True
 
         pygame.display.update()
         clock.tick(60)
