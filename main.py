@@ -19,7 +19,6 @@ def game_menu():
         button_x = display_width/2 - (display_width/10)/2
         button_y = display_height/2 + (display_height/20)/6 # location of the first button on Y axis
         # sets the distance between the buttons except for the last one, the 'EXIT' button
-
         dist_modifier = 1.2
         
         # list with each button text
@@ -44,7 +43,7 @@ def game_menu():
                 button_set.append(Card(button_width, button_height, button_x, button_set[i - 1].y + button_set[i - 1].height*dist_modifier , game_mode[i]))
               
             if button_set[i].y + button_set[i].height>= display_height:
-                print("------------------------------ E R R O R ------------------------------\nThe ammout of buttons excedes the display height")
+                print("------------------------------ E R R O R ------------------------------\nThe ammout of buttons exceeds the display height")
                 print("Try either repositioning the button set or creating less buttons\n-----------------------------------------------------------------------")
                 pygame.quit()
                 exit()

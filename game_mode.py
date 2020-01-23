@@ -6,16 +6,16 @@ display_width = 1220
 display_height = 700
 gameDisplay = pygame.display.set_mode([display_width, display_height])
 
-card_width1 = display_width/13 + 20
-card_height1 = display_height/5 + 20
+# card_width1 = display_width/13 + 20
+# card_height1 = display_height/5 + 20
 
-card_width = card_width1 - 20
-card_height = card_height1 - 20
+# card_width = card_width1 - 20
+# card_height = card_height1 - 20
 
 
-card_x = 0
-card_y = 0
-card_dist = 10
+# card_x = 0
+# card_y = 0
+# card_dist = 10
 
 display_center_x = display_width - display_width/2
 display_center_y = display_height - display_height/2
@@ -31,6 +31,16 @@ clock = pygame.time.Clock()
 def in_game(cards_hor, cards_vert):
     gameDisplay.fill(background_color)
     done = False
+
+    board_width = display_width - display_width/4
+    board_height = display_height - display_height/4
+    
+    card_width = (board_width/cards_vert) / 2.5
+    card_dist = card_width/15
+    card_height = card_width*1.5
+    card_x = 0 
+    card_y = 0
+
     fliped_cards_num = 0
     flips = 0
     fliped_cards_list = []  
