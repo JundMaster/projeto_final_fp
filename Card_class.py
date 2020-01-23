@@ -56,14 +56,14 @@ class Card:
         self.circle_y =  int(self.y + self.height/2)
         #####################################################################
         ########################### TRIANGLE SHAPE ##########################
-        self.triangle_v1 = 
+         
         if self.selected:
             if shape == 'square':
                 pygame.draw.rect(self.surface, self.shape_color, (self.rect_x, self.rect_y, self.rect_size, self.rect_size), 2)
             
             elif shape == 'circle':
                 pygame.draw.circle(self.surface, self.shape_color, (self.circle_x,self.circle_y ), self.circle_radius, 2)
-            ''''AINDA É PRECISO ARRANJAR AS COORDENADAS DOS VÉRTICES''''
+            #''''AINDA É PRECISO ARRANJAR AS COORDENADAS DOS VÉRTICES''''
             elif shape == 'triangle':
                 pygame.draw.polygon(self.surface, self.shape_color, [(50, 50), (75, 75), (25, 25)], 2)
         
