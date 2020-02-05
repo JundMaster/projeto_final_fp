@@ -20,8 +20,8 @@ class Card:
         self.color = color
         self.text = text
         self.surface = gameDisplay
-        self.clickable = True
-        self.clicked = False
+        # self.clickable = True
+        # self.clicked = False
         self.selected = False
         self.card_outline = red
         self.mouse_click = pygame.mouse.get_pressed()[0]
@@ -56,7 +56,12 @@ class Card:
         self.circle_y =  int(self.y + self.height/2)
         #####################################################################
         ########################### TRIANGLE SHAPE ##########################
-         
+        self.card_center = (int(self.x  + self.width/2), int(self.y  + self.height/2))
+        # self.card_y_center = int(self.y  + self.height/2)
+        self.dist_mod = self.height/3
+        self.v1_triangle = (self.card_center[0], self.y + self.dist_mod)
+        self.v2_triangle = (self.x + self.dist_mod, self.y + self.height - self.dist_mod)
+        self.v3_triangle = (self.x + self.width - self.dist_mod, self.y + self.height - self.dist_mod)
         if self.selected:
             if shape == 'square':
                 pygame.draw.rect(self.surface, self.shape_color, (self.rect_x, self.rect_y, self.rect_size, self.rect_size), 2)
@@ -65,7 +70,7 @@ class Card:
                 pygame.draw.circle(self.surface, self.shape_color, (self.circle_x,self.circle_y ), self.circle_radius, 2)
             #''''AINDA É PRECISO ARRANJAR AS COORDENADAS DOS VÉRTICES''''
             elif shape == 'triangle':
-                pygame.draw.polygon(self.surface, self.shape_color, [(50, 50), (75, 75), (25, 25)], 2)
+                pygame.draw.polygon(self.surface, self.shape_color, ((self.v1_triangle), (self.v2_triangle), (self.v3_triangle)), 2)
         
     def button(self, mouse):
         if self.collision(mouse) == True and self.mouse_click == 1:

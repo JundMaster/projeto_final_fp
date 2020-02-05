@@ -43,8 +43,8 @@ def game_menu():
                 button_set.append(Card(button_width, button_height, button_x, button_set[i - 1].y + button_set[i - 1].height*dist_modifier , game_mode[i]))
               
             if button_set[i].y + button_set[i].height>= display_height:
-                print("------------------------------ E R R O R ------------------------------\nThe ammout of buttons exceeds the display height")
-                print("Try either repositioning the button set or creating less buttons\n-----------------------------------------------------------------------")
+                print("-"*30," E R R O R ","-"*30,"\nThe ammout of buttons exceeds the display height")
+                print("Try either repositioning the button set or creating less buttons\n", "-"*72)
                 pygame.quit()
                 exit()
         # gets the position of the mouse
@@ -75,20 +75,21 @@ def game_menu():
         gm_len = len(game_mode)
         for i in range (0, gm_len):
             if button_set[i].button(mouse) == 1:
-                if (game_mode[i].replace(" ", "")).lower() == 'exit' :
-                    # print("'",str(game_mode[i][0]),"'",' or ',"'",str(game_mode[i][-1]),"'",' is not a valid game mode paramater.')
-                    # print(game_mode[i])
-                    pygame.quit()
-                    exit()
-                elif game_mode[i][0].isdigit() and game_mode[i][-1].isdigit():
-                    in_game(int(game_mode[i][0]),int(game_mode[i][-1]))
-                else:
-                    print("------------------------------ E R R O R ------------------------------")
-                    print("'",str(game_mode[i]),"' is not a valid game mode.")
-                    print("-----------------------------------------------------------------------")
-                    pygame.quit()
-                    exit()
-                gameDisplay.fill(background_color)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if (game_mode[i].replace(" ", "")).lower() == 'exit' :
+                        # print("'",str(game_mode[i][0]),"'",' or ',"'",str(game_mode[i][-1]),"'",' is not a valid game mode paramater.')
+                        # print(game_mode[i])
+                        pygame.quit()
+                        exit()
+                    elif game_mode[i][0].isdigit() and game_mode[i][-1].isdigit():
+                        in_game(int(game_mode[i][0]),int(game_mode[i][-1]))
+                    else:
+                        print("------------------------------ E R R O R ------------------------------")
+                        print("'",str(game_mode[i]),"' is not a valid game mode.")
+                        print("-"*2)
+                        pygame.quit()
+                        exit()
+                    gameDisplay.fill(background_color)
 
         pygame.display.update()
         clock.tick(60)
