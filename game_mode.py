@@ -1,24 +1,21 @@
 import pygame
 from Card_class import *
 from colors import *
+from score import *
 
 display_width = 1220
 display_height = 700
 gameDisplay = pygame.display.set_mode([display_width, display_height])
 
-# card_width1 = display_width/13 + 20
-# card_height1 = display_height/5 + 20
-
-# card_width = card_width1 - 20
-# card_height = card_height1 - 20
-
-
-# card_x = 0
-# card_y = 0
-# card_dist = 10
-
 display_center_x = display_width - display_width/2
 display_center_y = display_height - display_height/2
+
+def display_text(x, y, color, size = 25, text = None):
+    myfont = pygame.font.Font('NotoSans-Regular.ttf', size)
+    gameDisplay.get_rect(center=(x, y))
+    font_size = myfont.size(text)
+    my_text = myfont.render(text, 1, color)
+    gameDisplay.blit(my_text, (x, y))
 
 def card_check(card1, card2):
     if (card1.shape == card2.shape) and (card1.shape_color == card2.shape_color):
@@ -40,6 +37,12 @@ def in_game(cards_hor, cards_vert):
     card_height = card_width*1.5
     card_x = 0 
     card_y = 0
+
+    button_width = display_width/10
+    button_height = display_height/20
+    button_x = card_dist
+    button_y = display_height - button_height - card_dist
+
     timer_set = pygame.USEREVENT + 1
     pygame.time.set_timer(timer_set, 1000)
     
@@ -65,15 +68,14 @@ def in_game(cards_hor, cards_vert):
 
 
     shape_list = ['square', 'circle', 'triangle']
-    shape_color = [something, red, blue, green, cyan, pink, yellow]
+    shape_color = [cyan, red, blue, green, orange, pink, yellow, blue_green]
      
     score = 0
-    pudim_list = []
     possible = []
     for j in shape_color:
         for i in shape_list:
             possible.append((i,j))
-    
+ 
     game_deck = []
     
     # checks if the list of possible cards has enough elements to create the given amount of cards
@@ -120,24 +122,24 @@ def in_game(cards_hor, cards_vert):
     for j in range (0, cards_vert): # number of cards on the vertical
         for i in range (0, cards_hor): # number of cards on the horizontal
             if i == 0 and j == 0:
-                card = Card(card_width, card_height, card_center_x, y_card, green)
+                card = Card(card_width, card_height, card_center_x, y_card, card_green)
                 card.draw_flip(game_deck[0][0], game_deck[0][1])
 
             elif i == 0:
-                card = Card(card_width, card_height, card_center_x, card_list[-1].y + card_height + card_dist, green)
+                card = Card(card_width, card_height, card_center_x, card_list[-1].y + card_height + card_dist, card_green)
                 card.draw_flip(game_deck[num][0], game_deck[num][1])
 
             elif i > 0:
-                card = Card(card_width, card_height, card_list[-1].x + card_width + card_dist, card_list[-1].y, green)
+                card = Card(card_width, card_height, card_list[-1].x + card_width + card_dist, card_list[-1].y, card_green)
                 card.draw_flip(game_deck[num][0], game_deck[num][1])
             if num == cards_vert * cards_hor:
                 break
             num += 1
             card_list.append(card)
-    # for i in range(0, len(card_list)):
-    #     print("shape: ", str(card_list[i].shape))
-    #     print("shape color ", str(card_list[i].shape_color))
-    #     print("-"*30)
+    # # # for i in range(0, len(card_list)):
+    # # #     print("shape: ", str(card_list[i].shape))
+    # # #     print("shape color ", str(card_list[i].shape_color))
+    # # #     print("-"*30)
     flipped_cards_num = 0
     flips = 0
     flipped_cards_list = []
@@ -152,8 +154,6 @@ def in_game(cards_hor, cards_vert):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-            # elif event.type == timer_set:
-            #     clickable += 1
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     exit()
@@ -161,6 +161,8 @@ def in_game(cards_hor, cards_vert):
                     remove = True
                 elif remove == True and event.key == pygame.K_SPACE:
                     remove = False
+                elif event.key == pygame.K_BACKSPACE:
+                    done = True
             
             elif event.type == timer_set and flipped_cards_num == 2:
                 flipped_time += 1
@@ -178,41 +180,75 @@ def in_game(cards_hor, cards_vert):
                         flipped_cards_list.append(card)
                         card.selected = True
                         if flipped_cards_num == 2:
+                            flips += 1
                             clickable = False
                     
                 else:
                     # in case the mouse is not colliding with the card, its color is set to green
 
-                    card_color = green
+                    card_color = card_green
                 card.draw_card(card_color,0)
             else:
                 if flipped_time >= 2:
                     if card_check(flipped_cards_list[-1], flipped_cards_list[-2]):
                         card_list.remove(flipped_cards_list[-2])
                         card_list.remove(flipped_cards_list[-1])
+                        score += 100
                         
                     else:
                         flipped_cards_list[-2].selected = False
                         flipped_cards_list[-1].selected = False
+                        if flips >= 2:
+                            score = score - (20 * (flips - 1))
+                    if score <= 0:
+                        score = 0
+                    print("score : ", str(score))
                     clickable = True
                     flipped_time = 0
                     flipped_cards_num = 0
+
+
 
                 if card.collision(mouse):
                     outline_flip = white
                 else:
                     outline_flip = card.shape_color
-                
+
                 card.draw_card(background_color, 0)
                 card.draw_card(outline_flip, 2)
                 card.draw_flip(card.shape, card.shape_color)
 
+        # creates the EXIT button
+        exit_button = Button(button_width, button_height, 5, display_height - button_height - 5, 'Exit')
+        # score_text = Card(button_width, button_height, 5, 5, str('Score: ' + str(score)) )
+        congratulations = Button(button_width, button_height, display_width /2 - button_width/2, display_height/2, 'Congratulations')
+        if exit_button.collision(mouse):
+            button_color = white
+        else:
+            button_color = yellow
+        exit_button.draw_button(button_color, 2)
+
+        exit_button.draw_text(button_color)
+
+        if exit_button.button(mouse):
+            done = True
+        if done:
+            save_score(score)
+        try:
+            previous_score = get_score()[0]
+            high_score = get_score()[1]
+            
+        except:
+            previous_score = 0
+            high_score = 0
+
+        display_text(display_width - 200, 5, cyan, size = 25, text = str('Last Score: ' + str(previous_score)))
+        display_text(display_width - 200, 50, cyan, size = 25, text = str('Best Score: ' + str(high_score)))
+        display_text(5, 5, yellow, size = 25, text = str('Score: ' + str(score)))
+
         if not card_list:
-            print("YOU WON THE GAME, BRO!")
-            done = True 
-
+            congratulations.draw_text(cyan, 50)
         
-
 
  
         
