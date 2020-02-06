@@ -1,8 +1,8 @@
 def save_score(score):
-    with open('high_score.txt', 'a') as score_file:
-        score_file = open('high_score.txt', 'a')
+    with open('score.txt', 'a') as score_file:
+        score_file = open('score.txt', 'a')
         score_file.write('Score: ' + str(score) + '\n')
-    with open('high_score.txt', 'r') as score_file:
+    with open('score.txt', 'r') as score_file:
         temp_list = []
         score_list = []
         j = 0
@@ -19,7 +19,7 @@ def save_score(score):
         score_list.append(int("".join(temp_list[i])))
 
 def get_score():
-    score_file = open('high_score.txt', 'r')
+    score_file = open('score.txt', 'r')
     temp_list = []
     score_list = []
     j = 0
