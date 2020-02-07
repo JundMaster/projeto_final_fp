@@ -5,7 +5,10 @@ from game_mode import in_game
 from colors import *
 from functions import get_gm_list, lineno
 
+pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
+pygame.mixer.quit()
+pygame.mixer.init()
 display_width = 1220
 display_height = 700
 gameDisplay = pygame.display.set_mode([display_width, display_height])
@@ -16,9 +19,11 @@ collision_list = []
 shuffle_image = pygame.image.load('shuffle.png')
 image_width = shuffle_image.get_width()
 image_height = shuffle_image.get_height()
-# collision_sound = pygame.mixer.Sound('collision.wav')
+
+click_sound = pygame.mixer.Sound('click.wav')
 
 def game_menu():
+    playable = True
     temp_list = []
     number = []
     done = False
@@ -90,13 +95,17 @@ def game_menu():
 
         for i in range (0, gm_len):
             if button_set[i].button(mouse) == True:
+                if playable:
+                    click_sound.play()
+                    playable = False
                 if event.type == pygame.MOUSEBUTTONUP:
+                    playable = True
                     if (game_mode[i].replace(" ", "")).lower() == 'exit' :
                         exit()
 
                     else:
+                        line = lineno() + 2
                         try:
-                            line = lineno() + 1
                             in_game(gm_list[i][0], gm_list[i][1])
                         except:
                             print("-"*30," E R R O R " + "-"*30 )
@@ -106,7 +115,6 @@ def game_menu():
                             print("Try creating a game mode with the format '4 x 3'.")
                             print("The game mode you add to the list MUST be a string.")
                             print("-"*72)
-                            pygame.quit()
                             exit()
                     gameDisplay.fill(background_color)
 

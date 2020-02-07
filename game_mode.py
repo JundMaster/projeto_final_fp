@@ -3,6 +3,13 @@ from Card_class import *
 from colors import *
 from functions import display_text, card_check, save_score, get_score, lineno
 
+
+pygame.mixer.pre_init(22050, -16, 2, 4096)
+pygame.mixer.quit()
+pygame.mixer.init()
+flip_sound = pygame.mixer.Sound('flip.wav')
+win_sound1 = pygame.mixer.Sound('win_sound1.wav')
+win_sound2 = pygame.mixer.Sound('win_sound2.wav')
 display_width = 1220
 display_height = 700
 gameDisplay = pygame.display.set_mode([display_width, display_height])
@@ -16,7 +23,7 @@ clock = pygame.time.Clock()
 def in_game(cards_hor, cards_vert):
     gameDisplay.fill(background_color)
     done = False
-
+    playable = True
     board_width = display_width - display_width/6
     board_height = display_height - display_height/6
     if cards_vert > cards_hor:
@@ -118,8 +125,8 @@ def in_game(cards_hor, cards_vert):
 
             elif i == 0:
                 card = Card(card_width, card_height, card_center_x, card_list[-1].y + card_height + card_dist, card_green)
+                line = lineno() + 2
                 try:
-                    line = lineno() + 1
                     card.draw_flip(game_deck[num][0], game_deck[num][1])
                 except:
                     print("-"*30," E R R O R " + "-"*30 )
@@ -131,8 +138,8 @@ def in_game(cards_hor, cards_vert):
             elif i > 0:
 
                 card = Card(card_width, card_height, card_list[-1].x + card_width + card_dist, card_list[-1].y, card_green)
+                line = lineno() + 2
                 try:
-                    line = lineno() + 1
                     card.draw_flip(game_deck[num][0], game_deck[num][1])
                 except:
                     print("-"*30," E R R O R " + "-"*30 )
@@ -189,6 +196,7 @@ def in_game(cards_hor, cards_vert):
                         flipped_cards_num += 1
                         flipped_cards_list.append(card)
                         card.selected = True
+                        flip_sound.play()
                         if flipped_cards_num == 2:
                             flips += 1
                             clickable = False
@@ -203,6 +211,7 @@ def in_game(cards_hor, cards_vert):
                     if card_check(flipped_cards_list[-1], flipped_cards_list[-2]):
                         card_list.remove(flipped_cards_list[-2])
                         card_list.remove(flipped_cards_list[-1])
+                        flips = 0
                         score += 100
                         
                     else:
@@ -259,6 +268,12 @@ def in_game(cards_hor, cards_vert):
 
         if not card_list:
             congratulations.draw_text(cyan, 50)
+            if playable:
+                if score > high_score:
+                    win_sound1.play()
+                else:
+                    win_sound2.play()
+                playable = False
         
 
  
