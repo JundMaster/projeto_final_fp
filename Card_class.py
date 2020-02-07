@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 from colors import *
 
 pygame.init()
@@ -52,11 +53,14 @@ class Card:
         #####################################################################
         ########################### TRIANGLE SHAPE ##########################
         self.card_center = (int(self.x  + self.width/2), int(self.y  + self.height/2))
-        # self.card_y_center = int(self.y  + self.height/2)
-        self.dist_mod = self.height/4
-        self.v1_triangle = (self.card_center[0], self.y + self.dist_mod)
-        self.v2_triangle = (self.x + self.dist_mod, self.y + self.height - self.dist_mod)
-        self.v3_triangle = (self.x + self.width - self.dist_mod, self.y + self.height - self.dist_mod)
+        self.dist_mod = self.height/3
+        self.trig_height = (self.height - self.dist_mod) - (self.dist_mod)
+        self.mod = math.sqrt(((math.pow(self.trig_height, 2)) * 4)//12)
+        self.v1_triangle = (self.card_center[0], self.card_center[1] - self.trig_height//2)
+        self.v2_triangle = (self.card_center[0] - self.mod, self.card_center[1] + self.trig_height//2)
+        self.v3_triangle = (self.card_center[0] + self.mod, self.card_center[1] + self.trig_height//2)
+
+
         if self.selected:   
             if shape == 'square':
                 pygame.draw.rect(self.surface, self.shape_color, (self.rect_x, self.rect_y, self.rect_size, self.rect_size), 0)
