@@ -30,7 +30,7 @@ class Card:
         else:
             return False
 
-    def draw_card(self, color, stroke):
+    def draw_card(self, color, stroke = 0):
             pygame.draw.rect(self.surface, color, (self.x, self.y, self.width, self.height), stroke)
 
     def draw_flip(self, shape, shape_color, stroke = 2):
