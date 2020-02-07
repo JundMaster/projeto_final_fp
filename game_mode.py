@@ -1,7 +1,7 @@
 import pygame
 from Card_class import *
 from colors import *
-from score import *
+from functions import display_text, card_check, save_score, get_score, lineno
 
 display_width = 1220
 display_height = 700
@@ -10,18 +10,6 @@ gameDisplay = pygame.display.set_mode([display_width, display_height])
 display_center_x = display_width - display_width/2
 display_center_y = display_height - display_height/2
 
-def display_text(x, y, color, size = 25, text = None):
-    myfont = pygame.font.Font('NotoSans-Regular.ttf', size)
-    gameDisplay.get_rect(center=(x, y))
-    font_size = myfont.size(text)
-    my_text = myfont.render(text, 1, color)
-    gameDisplay.blit(my_text, (x, y))
-
-def card_check(card1, card2):
-    if (card1.shape == card2.shape) and (card1.shape_color == card2.shape_color):
-        return True
-    else:
-        return False
 
 clock = pygame.time.Clock()
 
@@ -29,12 +17,15 @@ def in_game(cards_hor, cards_vert):
     gameDisplay.fill(background_color)
     done = False
 
-    board_width = display_width - display_width/4
-    board_height = display_height - display_height/4
-    
-    card_width = (board_width/cards_vert) / 2.5
+    board_width = display_width - display_width/6
+    board_height = display_height - display_height/6
+    if cards_vert > cards_hor:
+        card_width = (board_width/cards_vert) / 2.5
+    else:
+        card_width = (board_width/cards_hor) / 2.5
     card_dist = card_width/15
     card_height = card_width*1.5
+
     card_x = 0 
     card_y = 0
 
@@ -98,10 +89,10 @@ def in_game(cards_hor, cards_vert):
     """
     This double for loop creates the card list that will be used in the game.
     
-    The first card (top, left) is the first to be created and it's part of a special case, since all the other incomming card
+    The first card (top, left) is the first to be created and it's part of a special case, since all the other incomming cards
     will be based on its position at the game board.
 
-    Once the first card is created, the loop will check for two different cases:
+    Once the first card is created, the loop will look for two different cases:
     
         elif i = 0:
             creates the first card of every row, considering the y position of the previous row
@@ -127,11 +118,30 @@ def in_game(cards_hor, cards_vert):
 
             elif i == 0:
                 card = Card(card_width, card_height, card_center_x, card_list[-1].y + card_height + card_dist, card_green)
-                card.draw_flip(game_deck[num][0], game_deck[num][1])
+                try:
+                    line = lineno() + 1
+                    card.draw_flip(game_deck[num][0], game_deck[num][1])
+                except:
+                    print("-"*30," E R R O R " + "-"*30 )
+                    print(f'File "game_mode.py", line {line}\n')
+                    print(f"'{cards_hor} x {cards_vert}' is not a valid game mode")
+                    print("Try making a game mode that will generate a odd number of cards\n" + "-"*72)
+                    exit()
 
             elif i > 0:
+
                 card = Card(card_width, card_height, card_list[-1].x + card_width + card_dist, card_list[-1].y, card_green)
-                card.draw_flip(game_deck[num][0], game_deck[num][1])
+                try:
+                    line = lineno() + 1
+                    card.draw_flip(game_deck[num][0], game_deck[num][1])
+                except:
+                    print("-"*30," E R R O R " + "-"*30 )
+                    print(f'File "game_mode.py", line {line}\n')
+                    print(f"'{cards_hor} x {cards_vert}' is not a valid game mode")
+                    print("Try making a game mode that will generate a odd number of cards\n" + "-"*72)
+                    exit()
+
+
             if num == cards_vert * cards_hor:
                 break
             num += 1
@@ -153,7 +163,7 @@ def in_game(cards_hor, cards_vert):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                done = True
+                exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     exit()
@@ -202,7 +212,7 @@ def in_game(cards_hor, cards_vert):
                             score = score - (20 * (flips - 1))
                     if score <= 0:
                         score = 0
-                    print("score : ", str(score))
+                    
                     clickable = True
                     flipped_time = 0
                     flipped_cards_num = 0
@@ -232,7 +242,7 @@ def in_game(cards_hor, cards_vert):
 
         if exit_button.button(mouse):
             done = True
-        if done:
+        if done and not card_list:
             save_score(score)
         try:
             previous_score = get_score()[0]
@@ -241,7 +251,8 @@ def in_game(cards_hor, cards_vert):
         except:
             previous_score = 0
             high_score = 0
-
+        board = Card(board_width, board_height, (display_width/2  - board_width/2), (display_height/2 - board_height/2))
+        # board.draw_card(cyan)
         display_text(display_width - 200, 5, cyan, size = 25, text = str('Last Score: ' + str(previous_score)))
         display_text(display_width - 200, 50, cyan, size = 25, text = str('Best Score: ' + str(high_score)))
         display_text(5, 5, yellow, size = 25, text = str('Score: ' + str(score)))
