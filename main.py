@@ -1,7 +1,9 @@
 import pygame
+import inspect
 from Card_class import *
 from game_mode import in_game
 from colors import *
+from functions import get_gm_list, lineno
 
 pygame.init()
 display_width = 1220
@@ -10,11 +12,18 @@ gameDisplay = pygame.display.set_mode([display_width, display_height])
 gameDisplay.fill(background_color)
 clock = pygame.time.Clock()
 collision_list = []
+
+shuffle_image = pygame.image.load('shuffle.png')
+image_width = shuffle_image.get_width()
+image_height = shuffle_image.get_height()
 # collision_sound = pygame.mixer.Sound('collision.wav')
 
 def game_menu():
+    temp_list = []
+    number = []
     done = False
     while not done:
+
         # setting the dimensions and position of the buttons
         button_width = display_width/10
         button_height = display_height/20
@@ -22,12 +31,16 @@ def game_menu():
         button_y = display_height/2 + (display_height/20)/6 # location of the first button on Y axis
         # sets the distance between the buttons except for the last one, the 'EXIT' button
         dist_modifier = 1.2
+
+        gameDisplay.blit(shuffle_image, (display_width/2 - image_width/2, button_y - image_height))
         
         # list with each button text
-        game_mode = ['4 x 3', '4 x 4', '5 x 4', '6 x 4', '6 x 5','EXIT']
+        game_mode = ['4 x 3', '4 x 4', '5 x 4', '6 x 5', '6 x 6','Exit']
+        gm_list = get_gm_list(game_mode)
+        # print(gm_list)
         # empty list that will contain each button with it respective text
         button_set = []
-        # the loop appends the buttons to the button_set 
+        # the loop appends the buttons to the button_set ss
         for i in range (0, len(game_mode)):
             # creates the first button
             if i == 0:
@@ -45,9 +58,8 @@ def game_menu():
                 button_set.append(Button(button_width, button_height, button_x, button_set[i - 1].y + button_set[i - 1].height*dist_modifier , game_mode[i]))
               
             if button_set[i].y + button_set[i].height>= display_height:
-                print("-"*30," E R R O R ","-"*30,"\nThe ammout of buttons exceeds the display height")
-                print("Try either repositioning the button set or creating less buttons\n", "-"*72)
-                pygame.quit()
+                print("-"*30 + " E R R O R " + "-"*30 + "\nThe amount of buttons exceeds the display height")
+                print("Try either repositioning the button set or creating less buttons\n" + "-"*72)
                 exit()
         # gets the position of the mouse
         mouse = pygame.mouse.get_pos()
@@ -75,22 +87,27 @@ def game_menu():
                 
         # check which button was clicked and goed to the corresponding game level
         gm_len = len(game_mode)
+
         for i in range (0, gm_len):
             if button_set[i].button(mouse) == True:
                 if event.type == pygame.MOUSEBUTTONUP:
                     if (game_mode[i].replace(" ", "")).lower() == 'exit' :
-                        # print("'",str(game_mode[i][0]),"'",' or ',"'",str(game_mode[i][-1]),"'",' is not a valid game mode paramater.')
-                        # print(game_mode[i])
-                        pygame.quit()
                         exit()
-                    elif game_mode[i][0].isdigit() and game_mode[i][-1].isdigit():
-                        in_game(int(game_mode[i][0]),int(game_mode[i][-1]))
+
                     else:
-                        print("------------------------------ E R R O R ------------------------------")
-                        print("'",str(game_mode[i]),"' is not a valid game mode.")
-                        print("-"*71)
-                        pygame.quit()
-                        exit()
+                        try:
+                            line = lineno() + 1
+                            in_game(gm_list[i][0], gm_list[i][1])
+                        except:
+                            print("-"*30," E R R O R " + "-"*30 )
+                            print(f'File "main.py", line {line}')
+                            # print("'" + str(game_mode[i]) + "' is not a valid game mode.\n")
+                            print(f"'{game_mode[i]}' is not a valid game mode.\n")
+                            print("Try creating a game mode with the format '4 x 3'.")
+                            print("The game mode you add to the list MUST be a string.")
+                            print("-"*72)
+                            pygame.quit()
+                            exit()
                     gameDisplay.fill(background_color)
 
         pygame.display.update()
