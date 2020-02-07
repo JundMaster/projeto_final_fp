@@ -1,5 +1,5 @@
 import pygame
-from Card_class import *
+from classes import *
 from colors import *
 from functions import display_text, card_check, save_score, get_score, lineno
 
@@ -24,12 +24,16 @@ def in_game(cards_hor, cards_vert):
     gameDisplay.fill(background_color)
     done = False
     playable = True
+    # defines the game board dimensions
     board_width = display_width - display_width/6
     board_height = display_height - display_height/6
+
+    # defines the card dimensions considering the number of vertical and horizontal cards
     if cards_vert > cards_hor:
         card_width = (board_width/cards_vert) / 2.5
     else:
         card_width = (board_width/cards_hor) / 2.5
+    # defines the distance between all cards based on their width
     card_dist = card_width/15
     card_height = card_width*1.5
 
@@ -153,6 +157,8 @@ def in_game(cards_hor, cards_vert):
                 break
             num += 1
             card_list.append(card)
+
+# this commented block prints to the the command line 
     # # # for i in range(0, len(card_list)):
     # # #     print("shape: ", str(card_list[i].shape))
     # # #     print("shape color ", str(card_list[i].shape_color))
@@ -170,9 +176,11 @@ def in_game(cards_hor, cards_vert):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
                     exit()
                 elif remove == False and event.key == pygame.K_SPACE:
                     remove = True
@@ -180,7 +188,7 @@ def in_game(cards_hor, cards_vert):
                     remove = False
                 elif event.key == pygame.K_BACKSPACE:
                     done = True
-            
+            # counts the time since two cards were flipped
             elif event.type == timer_set and flipped_cards_num == 2:
                 flipped_time += 1
 
@@ -198,15 +206,17 @@ def in_game(cards_hor, cards_vert):
                         card.selected = True
                         flip_sound.play()
                         if flipped_cards_num == 2:
+                            # increments the player attempts
                             flips += 1
+                            # makes all the other cards unclickable 
                             clickable = False
                     
                 else:
                     # in case the mouse is not colliding with the card, its color is set to green
-
                     card_color = card_green
                 card.draw_card(card_color,0)
             else:
+                # if the time passed since the two cards were selected is 2 or more the card_check functions is called
                 if flipped_time >= 2:
                     if card_check(flipped_cards_list[-1], flipped_cards_list[-2]):
                         card_list.remove(flipped_cards_list[-2])
@@ -260,8 +270,7 @@ def in_game(cards_hor, cards_vert):
         except:
             previous_score = 0
             high_score = 0
-        board = Card(board_width, board_height, (display_width/2  - board_width/2), (display_height/2 - board_height/2))
-        # board.draw_card(cyan)
+
         display_text(display_width - 200, 5, cyan, size = 25, text = str('Last Score: ' + str(previous_score)))
         display_text(display_width - 200, 50, cyan, size = 25, text = str('Best Score: ' + str(high_score)))
         display_text(5, 5, yellow, size = 25, text = str('Score: ' + str(score)))
