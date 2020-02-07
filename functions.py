@@ -5,9 +5,11 @@ display_width = 1220
 display_height = 700
 gameDisplay = pygame.display.set_mode([display_width, display_height])
 
+# gets the code line
 def lineno():
     return inspect.currentframe().f_back.f_lineno
 
+# take a list of string with numbers in it and return a list of ints
 def get_gm_list(game_mode):
     temp_list = []
     number = []
@@ -67,6 +69,7 @@ def save_score(score):
         score_file = open('score.txt', 'a')
         score_file.write('Score: ' + str(score) + '\n')
 
+# reads the score from the score file and return both the last and highest one
 def get_score():
     with open('score.txt', 'r') as score_file:
         temp_list = []
