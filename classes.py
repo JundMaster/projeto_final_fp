@@ -67,7 +67,7 @@ class Card:
             
             elif shape == 'circle':
                 pygame.draw.circle(self.surface, self.shape_color, (self.circle_x,self.circle_y ), self.circle_radius, 0)
-            #''''AINDA É PRECISO ARRANJAR AS COORDENADAS DOS VÉRTICES''''
+                
             elif shape == 'triangle':
                 pygame.draw.polygon(self.surface, self.shape_color, ((self.v1_triangle), (self.v2_triangle), (self.v3_triangle)), 0)
         
