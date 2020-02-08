@@ -35,15 +35,20 @@ O [main.py](https://github.com/JundMaster/projeto_final_fp/blob/master/main.py) 
 Mas para além de mostrar na tela o menu principal, esta função realiza todos os processos necessários para a execução das tarefas que são atribuídas a cada botão presente na tela.
 ##### Botões:
 Para criar os botões que o jogo vai aprensentar, basta acrescentar o texto referente ao *game mode* pretendido na lista game_mode:
-`
+<br/><br/>
+```python
 game_mode = ['4 x 3', '4 x 4', '5 x 4', '6 x 5', '6 x 6','Exit']
-`
+```
+<br/><br/>
 *Esta lista deve conter SOMENTE strings.*
+<br/><br/>
 Uma vez que esta lista está criada, é invocada a função *get_gm_list()* que vai converter toda essa lista de strings, para uma lista de inteiros:
-`
+```
 gm_list = [[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
-`
+```
+<br/><br/>
 *Esta função vai explicada mais à frente.*
+<br/><br/>
 Sendo esta uma lista de inteiros, o conteúdo do botão 'Exit é ignorado e deixado de fora desta lista.
 A função chega então a um loop, que irá criar realmente os botões.
 Cada botão é uma instância da classe *Button* (também será melhor explicada adiante).
@@ -58,6 +63,7 @@ Ao entrar no loop, são criados os botões com base nas strings contidas na list
 button_set.append(Button(button_width, button_height, button_x, button_y, game_mode[<index>]))
 ```
 <sub>*A lista *button_set* contém, REALMENTE, os botões. Não é apenas uma lista de strings ou inteiros.*</sub>
+<br/><br/>
 <sub>As strings passadas na lista *game_mode* serão, exatamente, os textos dos botões. 
 </sub>
 
@@ -86,3 +92,4 @@ Try creating a game mode with the format '4 x 3'.
 The game mode you add to the list MUST be a string.
 ------------------------------------------------------------------------
 ```
+### [game_mode.py](https://github.com/JundMaster/projeto_final_fp/blob/master/game_mode.py)
