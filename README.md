@@ -15,7 +15,7 @@ Nenhuma penalização é dada caso o jogador ainda esteja na sua primeira tentat
 A pontuação nunca é inferior a 0.
 #### Best Score & Last Score
 Cada vez que o jogador "limpa" o tabuleiro por completo o programa registra a sua pontuação num ficheiro: *score.txt*.
-Posteriormente é feita uma comparação entre todas as pontuações registradas no ficheiro e a maior delas é tida como *best score*.
+Posteriormente é feita uma comparação entre todas as pontuações registradas no ficheiro e a maior delas é tida como *best score*.</p>
 A pontuação obtida na última vez em que se jogou e o tabuleiro foi "limpo" é tida como *last score*.
 Uma música é tocada a cada vez que o jogador consegue limpar o tabuleiro.
 Caso a pontuação feita supere o *best score* toca uma música, caso não aconteça, toca outra.
@@ -29,7 +29,7 @@ O código está distribuído entre 5 ficheiros .py principais:
 O restante dos arquivos diz respeito a sons, imagens e fontes usadas no jogo.
 
 ### [main.py](https://github.com/JundMaster/projeto_final_fp/blob/master/main.py)
-Este é o ficheiro principal do jogo. É aquele que deve ser corrido para que o jogo seja aberto.
+Este é o ficheiro principal do jogo. É aquele que deve ser corrido para que o jogo seja aberto.</p>
 O [main.py](https://github.com/JundMaster/projeto_final_fp/blob/master/main.py) contém a função *game_menu()* que, assim como o nome indica, apresenta o menu principal ao jogador.
 ![alt text](/README_images/game_menu.png)
 Mas para além de mostrar na tela o menu principal, esta função realiza todos os processos necessários para a execução das tarefas que são atribuídas a cada botão presente na tela.
@@ -45,9 +45,9 @@ Uma vez que esta lista está criada, é invocada a função *get_gm_list()* que 
 gm_list = [[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
 ```
 <br/><br/>*Esta função vai explicada mais à frente.*<br/><br/>
-Sendo esta uma lista de inteiros, o conteúdo do botão 'Exit é ignorado e deixado de fora desta lista.
-A função chega então a um loop, que irá criar realmente os botões.
-Cada botão é uma instância da classe *Button* (também será melhor explicada adiante).
+Sendo esta uma lista de inteiros, o conteúdo do botão 'Exit é ignorado e deixado de fora desta lista.</p>
+A função chega então a um loop, que irá criar realmente os botões.</p>
+Cada botão é uma instância da classe *Button* (também será melhor explicada adiante).</p>
 Sendo um *Button* cada um dos botões deve receber os seguintes parâmetros:
 * largura;
 * altura;
@@ -62,7 +62,7 @@ button_set.append(Button(button_width, button_height, button_x, button_y, game_m
 <sub>As strings passadas na lista *game_mode* serão, exatamente, os textos dos botões. 
 </sub><br/><br/>
 Os botões são criados por ordem, guiados pela posição do primeiro, mantendo uma pequena distância entre si.
-O botão 'Exit' é o único que é tratado de forma diferente. Ele deve ser o ÚLTIMO da lista *game_mode* e o seu texto deverá conter de alguma forma as letras ['E', 'X', 'I', 'T'], nesta ordem, para que seja atribuída uma distância um pouco maior entre ele e o botão anterior.
+O botão 'Exit' é o único que é tratado de forma diferente. Ele deve ser o ÚLTIMO da lista *game_mode* e o seu texto deverá conter de alguma forma as letras ['E', 'X', 'I', 'T'], nesta ordem, para que seja atribuída uma distância um pouco maior entre ele e o botão anterior.</p>
 Posteriormente, a função trata verificar a colisão do mouse com o botão, e pinta-o de acordo e também imprime a string passada na lista *game_mode* no botão:
 ```python
 for button in button_set:
@@ -74,8 +74,8 @@ for button in button_set:
     button.draw_text(button_color)
     button.draw_button(button_color, 2)
 ```
-Feito isto, o programa verifica se algum botão é clicado, caso seja, entrará no modo de jogo definido. Caso o botão seja o 'Exit', o jogo irá encerrar.
-Caso seja passada na lista *game_mode* uma string que não contenha, pelo menos, dois números ou a string 'exit' o jogo irá fechar e apresentar uma mensagem de erro.
+Feito isto, o programa verifica se algum botão é clicado, caso seja, entrará no modo de jogo definido. Caso o botão seja o 'Exit', o jogo irá encerrar.</p>
+Caso seja passada na lista *game_mode* uma string que não contenha, pelo menos, dois números ou a string 'exit' o jogo irá fechar e apresentar uma mensagem de erro.</p>
 Segue o exemplo caso seja passado na lista a string 'pudim':
 ```
 ------------------------------  E R R O R ------------------------------
