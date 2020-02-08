@@ -1,4 +1,5 @@
 # Projeto Final - Shuffle
+![alt text](/README_images/game_menu.png)
 ---
 ## Descrição do projeto
 “Shuffle” é um jogo de memória, em que o jogador tem de encontrar os pares de cartas virando apenas duas de cada vez. Caso as cartas viradas formem um par, o jogador recebe 100 pontos e as cartas são eliminadas do tabuleiro.
