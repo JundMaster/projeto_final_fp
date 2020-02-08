@@ -287,7 +287,7 @@ Olhando agora para alguns dos métodos das classes, temos:</p>
 `draw_flip(self, shape, shape_color, stroke = 2)`, que é o método mais complexo desta classe `Card`.</p>
 Esta função é invocada durante o jogo para desenhar a forma da carta, com a sua respectiva cor.</p>
 Para isto, basta:
-* Passar a forma da carta em formato de string;
+* Passar a forma da carta em formato de string;</p>
 <sub>daí usar-se uma lista com strings, como referido anteriormente.
 ```py
 shape_list = ['square', 'circle', 'triangle']
