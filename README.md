@@ -269,8 +269,31 @@ Considerando o executável dado pelo professor, notei que mesmo quando as cartas
 Desta forma, para contornar a situação, fiz um simples contador de tempo que é acionado assim que o número de cartas viradas é 2, e que volta a zero assim que a função `card_check()` faz o seu trabalho.</p>
 ___
 #### Registro de score:
-Assim que o jogador limpa todo o tabuleiro, o programa registra a pontuação obtida nesse jogo e compara com a pontuação mais alta até aquele momento. E, dependendo do resultado da comparação, é tocada uma música de vitória diferente.
-Há uma música para quando o jogador ultrapassa a melhor pontuação até o momento: `win_sound1` e outra para caso isso não aconteça `win_sound2`.
-Se o jogador desistir a meio do jogo, não é feito registro algum de score.
+Assim que o jogador limpa todo o tabuleiro, o programa registra a pontuação obtida nesse jogo e compara com a pontuação mais alta até aquele momento. E, dependendo do resultado da comparação, é tocada uma música de vitória diferente.</p>
+Há uma música para quando o jogador ultrapassa a melhor pontuação até o momento: `win_sound1` e outra para caso isso não aconteça `win_sound2`.</p>
 
 
+Se o jogador desistir a meio do jogo, não é feito registro algum de score.</p>
+### [classes.py](https://github.com/JundMaster/projeto_final_fp/blob/master/classes.py)
+Este ficheiro contém as duas classes utilizadas ao longo do código: `Card` e `Button`.</p>
+As duas são muito semelhantes, pois a `Button` é uma variação da outra classe.</p>
+Porque não usar a mesma classe?</p>
+Inicialmente esta classe era uma só, mas mais tarde, pelo bem da legibilidade e da praticidade definiu-se uma classe apenas para os botões e outra apenas para as cartas.</p>
+Esta é mais uma medida em vista a facilitar a compreensão e manipulação do código no futuro, não só por mim, mas por qualquer pessoa.</p>
+Olhando agora para alguns dos métodos das classes, temos:</p>
+`collision(self, mouse):`, que verifica a colisão do rato com a carta.</p>
+`draw_card(self, color, stroke = 0)`, que desenha a carta com a cor e com a espessura de *outline* passados como parâmetro.</p>
+`button(self, mouse)`, que verifica se a carta foi clicada.</p>
+`draw_flip(self, shape, shape_color, stroke = 2)`, que é o método mais complexo desta classe `Card`.</p>
+Esta função é invocada durante o jogo para desenhar a forma da carta, com a sua respectiva cor.</p>
+Para isto, basta:
+* Passar a forma da carta em formato de string;
+<sub>daí usar-se uma lista com strings, como referido anteriormente.
+```py
+shape_list = ['square', 'circle', 'triangle']
+```
+</sub>
+
+* Passar a cor da forma;
+
+Posteriormente o programa irá reconhecer o formato e cor passados como parâmetro e desenhá-los quando a função for invocada.
