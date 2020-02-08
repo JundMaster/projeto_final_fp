@@ -14,6 +14,10 @@ P = TF * 20
 ```
 Nenhuma penalização é dada caso o jogador ainda esteja na sua primeira tentativa falhada e o contador de tentativas é reiniciado a cada acerto.
 A pontuação nunca é inferior a 0.
+___
+A qualquer momento o jogador pode usar a tecla 'ESC' para sair do jogo. E caso esteja dentro de um modo de jogo, basta pressionar a tecla 'BACKSPACE' para voltar ao menu principal.
+Alternativamente, também é possível usar os botões 'Exit' para fechar o jogo, caso esteja no menu principal, e para voltar ao menu, caso esteja num modo de jogo.
+___
 #### Best Score & Last Score
 Cada vez que o jogador "limpa" o tabuleiro por completo o programa registra a sua pontuação num ficheiro: *score.txt*.
 Posteriormente é feita uma comparação entre todas as pontuações registradas no ficheiro e a maior delas é tida como *best score*.</p>
