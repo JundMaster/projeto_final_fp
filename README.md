@@ -30,17 +30,17 @@ O restante dos arquivos diz respeito a sons, imagens e fontes usadas no jogo.
 
 ### [main.py](https://github.com/JundMaster/projeto_final_fp/blob/master/main.py)
 Este é o ficheiro principal do jogo. É aquele que deve ser corrido para que o jogo seja aberto.</p>
-O [main.py](https://github.com/JundMaster/projeto_final_fp/blob/master/main.py) contém a função *game_menu()* que, assim como o nome indica, apresenta o menu principal ao jogador.
+O [main.py](https://github.com/JundMaster/projeto_final_fp/blob/master/main.py) contém a função `game_menu()` que, assim como o nome indica, apresenta o menu principal ao jogador.
 ![alt text](/README_images/game_menu.png)
 Mas para além de mostrar na tela o menu principal, esta função realiza todos os processos necessários para a execução das tarefas que são atribuídas a cada botão presente na tela.
 #### Botões:
-Para criar os botões que o jogo vai aprensentar, basta acrescentar o texto referente ao *game mode* pretendido na lista game_mode:
+Para criar os botões que o jogo vai aprensentar, basta acrescentar o texto referente ao *game mode* pretendido na lista `game_mode`:
 <br/><br/>
 ```python
 game_mode = ['4 x 3', '4 x 4', '5 x 4', '6 x 5', '6 x 6','Exit']
 ```
 *Esta lista deve conter SOMENTE strings.*</p>
-Uma vez que esta lista está criada, é invocada a função *get_gm_list()* que vai converter toda essa lista de strings, para uma lista de inteiros:
+Uma vez que esta lista está criada, é invocada a função `get_gm_list()` que vai converter toda essa lista de strings, para uma lista de inteiros:
 ```python
 gm_list = [[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
 ```
@@ -77,22 +77,22 @@ Try either repositioning the button set or creating less buttons
 ------------------------------------------------------------------------
 ```
 Cada botão é uma instância da classe *Button* (também será melhor explicada adiante).</p>
-Sendo um *Button* cada um dos botões deve receber os seguintes parâmetros:
+Sendo um `Button` cada um dos botões deve receber os seguintes parâmetros:
 * largura;
 * altura;
 * posição x;
 * posição y;
 * texto do *game mode*;</p>
-Ao entrar no loop, são criados os botões com base nas strings contidas na lista *game_mode* e os *Button*'s são realmente colocados na lista *button_set*:
+Ao entrar no loop, são criados os botões com base nas strings contidas na lista `game_mode` e os *Button*'s são realmente colocados na lista `button_set`:
 ```python
 button_set.append(Button(button_width, button_height, button_x, button_y, game_mode[<index>]))
 ```
-<sub>*A lista *button_set* contém, REALMENTE, os botões. Não é apenas uma lista de strings ou inteiros.*</sub></p>
-<sub>As strings passadas na lista *game_mode* serão, exatamente, os textos dos botões. 
+<sub>*A lista *`button_set`* contém, REALMENTE, os botões. Não é apenas uma lista de strings ou inteiros.*</sub></p>
+<sub>As strings passadas na lista *`game_mode`* serão, exatamente, os textos dos botões. 
 </sub><br/>
 Os botões são criados por ordem, guiados pela posição do primeiro, mantendo uma pequena distância entre si.
-O botão 'Exit' é o único que é tratado de forma diferente. Ele deve ser o ÚLTIMO da lista *game_mode* e o seu texto deverá conter de alguma forma as letras ['E', 'X', 'I', 'T'], nesta ordem, para que seja atribuída uma distância um pouco maior entre ele e o botão anterior.</p>
-Posteriormente, a função trata verificar a colisão do mouse com o botão, e pinta-o de acordo e também imprime a string passada na lista *game_mode* no botão:
+O botão 'Exit' é o único que é tratado de forma diferente. Ele deve ser o ÚLTIMO da lista `game_mode` e o seu texto deverá conter de alguma forma as letras ['E', 'X', 'I', 'T'], nesta ordem, para que seja atribuída uma distância um pouco maior entre ele e o botão anterior.</p>
+Posteriormente, a função trata verificar a colisão do mouse com o botão, e pinta-o de acordo e também imprime a string passada na lista `game_mode` no botão:
 ```python
 for button in button_set:
     if button.collision(mouse) == True:
@@ -105,7 +105,7 @@ for button in button_set:
 ```
 Feito isto, o programa verifica se algum botão é clicado. Caso seja, entrará no modo de jogo definido.</p>
 Caso o botão seja o 'Exit', o jogo irá encerrar.</p>
-Caso seja passada na lista *game_mode* uma string que não contenha, pelo menos, dois números ou a string 'exit' o jogo irá fechar e apresentar uma mensagem de erro.</p>
+Caso seja passada na lista `game_mode` uma string que não contenha, pelo menos, dois números ou a string 'exit' o jogo irá fechar e apresentar uma mensagem de erro.</p>
 Segue o exemplo caso seja passado na lista a string 'pudim':
 ```
 ------------------------------  E R R O R ------------------------------
@@ -123,7 +123,7 @@ try:
 except IndexError:
     <imprime o erro referido acima>
 ```
-Não havendo nenhum erro, a função *in_game()* é chamada, e passam-se como parâmetro os valores guardados na lista *gm_list* que correspondem ao número de cartas na horizontal e vertical, respectivamente:
+Não havendo nenhum erro, a função `in_game()` é chamada, e passam-se como parâmetro os valores guardados na lista `gm_list` que correspondem ao número de cartas na horizontal e vertical, respectivamente:
 ```python
 gm_list = [[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
 ```
@@ -167,7 +167,7 @@ for j in shape_color:
     for i in shape_list:
         possible.append((i,j))
 ```
-A lista *possible* passa a guardar as formas e cores como túpulos, seguindo o seguinte formato:
+A lista `possible` passa a guardar as formas e cores como túpulos, seguindo o seguinte formato:
 ```
 possible = [('square', [0, 255, 255]), ('circle', [0, 255, 255]), ('triangle', [0, 255, 255]]
 ```
@@ -190,7 +190,7 @@ E então baralha a ordem destas cartas:
 ```
 random.shuffle(game_deck)
 ```
-Feito isto, é criada então mais uma lista - *card_list* -, que vai conter, desta vez, as cartas propriamente ditas, isto é, as instânciações da classe *Card*.</p>
+Feito isto, é criada então mais uma lista - `card_list` -, que vai conter, desta vez, as cartas propriamente ditas, isto é, as instânciações da classe `Card`.</p>
 <sub>*A explicação da criação destas instânciações está num docstring no próprio ficheiro [game_mode.py](https://github.com/JundMaster/projeto_final_fp/blob/master/game_mode.py).*</sub></p>
 Considerando a possibilidade de se criar um *game mode* que não gere um número total de cartas par, como '3 x 3', adotou-se a seguinte medida:
 ```py
@@ -225,18 +225,18 @@ Para entender como a lógica foi estruturada, há que atentar para as seguintes 
 
 `flipped_cards_num` trata-se do número de cartas que estão viradas com a face para cima.</p>
 `flipped_cards_list` é uma lista que contém as cartas que foram viradas.</p>
-`card.selected` é uma variável associada ao objeto *card*, que define se a carta encontra-se selecionada ou não
+`card.selected` é uma variável associada ao objeto *card*, que define se a carta encontra-se selecionada ou não</p>
 `clickable` é uma variável booleana que define se a é possível clicar ou não nas cartas.</p>
 `flipped_time` conta o tempo que se passou desde que duas cartas foram viradas.</p>
 `flips` registra o número de vezes que o jogador tentou encontrar um par de cartas sem ter sucesso.</p>
 `card_color` trata-se da cor da carta.</p>
 `score` é a pontuação do jogador.</p>
 ___
-O primeiro passo para desenhar as cartas, é verificar se cada carta está ou não selecionada, através da variável *selected*, da classe *Card*.</p>
+O primeiro passo para desenhar as cartas, é verificar se cada carta está ou não selecionada, através da variável `selected`, da classe `Card`.</p>
 Se o programa verificar que a carta não esta selecionada, ele avança para o passo seguinte:</p>
 Verificar se o mouse está a colidir com a carta:</p>
-* Caso esteja a colidir a carta é pintada de branco, senão, deve ser pintada de verde;
-* Verificar se é possível clicar nas cartas através da variável *clickable*:
+* Caso esteja a colidir, a carta é pintada de branco, senão, deve ser pintada de verde;
+* Verificar se é possível clicar nas cartas através da variável `clickable`:</p>
     Se as carta forem "clickable", for feito um click sobre uma carta e o usuário levantar o botão do rato, o programa avançará para o passo seguinte:
     * Incrementa o número de cartas viradas em uma unidade:</p>
     `flipped_cards_num += 1`</p>
@@ -252,17 +252,19 @@ Verificar se o mouse está a colidir com a carta:</p>
 
 Uma vez que a carta estiver "selected", o programa irá deixar de verificar a colisão afim de desenhar a parte de trás da carta como verde ou branco.</p>
 O que irá acontecer agora é desenhar a forma da carta (com a sua respectiva cor) e pintar o *outline* de branco, caso o rato esteja a colidir com a carta, ou da cor da forma caso não esteja.</p>
-A partir do momento em que duas cartas estiverem selecionadas, a variável *fliped_card_num* irá assumir o valor 2, que é um gatilho para algumas ações ocorrerem:
+A partir do momento em que duas cartas estiverem selecionadas, a variável `fliped_card_num` irá assumir o valor 2, que é um gatilho para algumas ações ocorrerem:
 * Nenhuma das cartas do tabuleiro será clicável;
 * O número de tentativas é incrementado em 1 unidade;
-* A variável *fliped_time* aumenta uma unidade a cada segundo;
-  * Assim que esta variável atinge o valor 2 ou superior, a função *card_check()* é chamada, e verifica se as duas últimas cartas acrescentadas à lista de cartas viradas tem cor e forma correspondente.
-    * Caso tenham o *score* aumenta em 100 unidades, o número de tentativas (*flips*) volta a ser 0 e as cartas são removidas da lista de cartas selecionadas.
+* A variável `fliped_time` aumenta uma unidade a cada segundo;
+  * Assim que esta variável atinge o valor 2 ou superior, a função `card_check()` é chamada, e verifica se as duas últimas cartas acrescentadas à lista de cartas viradas tem cor e forma correspondente.
+    * Caso tenham o *score* aumenta em 100 unidades, o número de tentativas (`flips`) volta a ser 0 e as cartas são removidas da lista de cartas selecionadas.
     * Caso contrário, ambas as cartas selecionadas passam a estar "não selecionadas", e o jogador recebe uma penalização na pontuação tendo em conta o número de tentativas que realizou até o momento.
-  * Independentemente do retorno da função *card_check()*, todas as cartas do tabuleiro passam a ser "clicáveis" novamente: `clickable = True`; o contador de tempo volta a zero: `flipped_time = 0` e o número de cartas viradas também volta a zero: `flipped_cards_num = 0`;</p>
+  * Independentemente do retorno da função `card_check()`, todas as cartas do tabuleiro passam a ser "clicáveis" novamente: `clickable = True`; o contador de tempo volta a zero: `flipped_time = 0` e o número de cartas viradas também volta a zero: `flipped_cards_num = 0`.</p>
   
-
-
-
-___
+#### Why not *pygame.time.delay*?
+Inicialmente, a ideia era usar a função `pygame.time.delay()` para fazer o jogo esperar o tempo desejado até virar as cartas para baixo novamente.</p>
+Entretanto, esta medida faz com que o jogo realmente pare. Sendo assim, enquanto não passasse o tempo que havia sido definido, nenhuma ação seria registrada.</p>
+Quais são as implicações disto?</p>
+Considerando o executável dado pelo professor, notei que mesmo quando as cartas estão viradas, o seu *outline* ainda sofria alterações caso houvesse colisão do rato com a carta. Isto significa que o jogo ainda estava a registrar as ações. Ele não estava simplesmente parado.</p>
+Desta forma, para contornar a situação, fiz um simples contador de tempo que é acionado assim que o número de cartas viradas é 2, e que volta a zero assim que a função `card_check()` faz o seu trabalho.</p>
 
