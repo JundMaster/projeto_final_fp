@@ -145,10 +145,10 @@ else:
 ```
 Isto verifica em que caso nos encontramos - mais cartas na vertical (ou igual número de cartas) ou na horizontal. E assim define a dimensão das cartas, de modo a não se ultrapassar as medidas máximas do tabuleiro.</p>
 Tendo estabelecido a largura das cartas, o programa então define a distância que deverá haver entre as cartas, considerando a sua largura:
-`card_dist = card_width/15`</p> 
+`card_dist = card_width/15`.</p> 
 Desta forma, garantimos que, mesmo não havendo uma distância fixa estabelecida entre as cartas, ela sempre será proporcional à largura das mesmas, o que depende do número de cartas no ecrã.</p>
 Procede-se da mesma forma para a altura das cartas:
-`card_height = card_width*1.5`</p>
+`card_height = card_width*1.5`.</p>
 #### Cores e formas:
 As formas que aparecem nas cartas são passadas numa lista de strings:
 ```py
@@ -249,7 +249,7 @@ Verificar se o mouse está a colidir com a carta:</p>
     * Verifica quantas cartas já foram viradas e caso o número seja 2, incrementa o número de tentativas em 1 unidade e torna as cartas não clicáveis:</p>
     `flips += 1`</p>
     `clickable = False`</p>
-
+___
 Uma vez que a carta estiver "selected", o programa irá deixar de verificar a colisão afim de desenhar a parte de trás da carta como verde ou branco.</p>
 O que irá acontecer agora é desenhar a forma da carta (com a sua respectiva cor) e pintar o *outline* de branco, caso o rato esteja a colidir com a carta, ou da cor da forma caso não esteja.</p>
 A partir do momento em que duas cartas estiverem selecionadas, a variável `fliped_card_num` irá assumir o valor 2, que é um gatilho para algumas ações ocorrerem:
@@ -267,4 +267,10 @@ Entretanto, esta medida faz com que o jogo realmente pare. Sendo assim, enquanto
 Quais são as implicações disto?</p>
 Considerando o executável dado pelo professor, notei que mesmo quando as cartas estão viradas, o seu *outline* ainda sofria alterações caso houvesse colisão do rato com a carta. Isto significa que o jogo ainda estava a registrar as ações. Ele não estava simplesmente parado.</p>
 Desta forma, para contornar a situação, fiz um simples contador de tempo que é acionado assim que o número de cartas viradas é 2, e que volta a zero assim que a função `card_check()` faz o seu trabalho.</p>
+___
+#### Registro de score:
+Assim que o jogador limpa todo o tabuleiro, o programa registra a pontuação obtida nesse jogo e compara com a pontuação mais alta até aquele momento. E, dependendo do resultado da comparação, é tocada uma música de vitória diferente.
+Há uma música para quando o jogador ultrapassa a melhor pontuação até o momento: `win_sound1` e outra para caso isso não aconteça `win_sound2`.
+Se o jogador desistir a meio do jogo, não é feito registro algum de score.
+
 
