@@ -33,7 +33,7 @@ Este é o ficheiro principal do jogo. É aquele que deve ser corrido para que o 
 O [main.py](https://github.com/JundMaster/projeto_final_fp/blob/master/main.py) contém a função *game_menu()* que, assim como o nome indica, apresenta o menu principal ao jogador.
 ![alt text](/README_images/game_menu.png)
 Mas para além de mostrar na tela o menu principal, esta função realiza todos os processos necessários para a execução das tarefas que são atribuídas a cada botão presente na tela.
-##### Botões:
+#### Botões:
 Para criar os botões que o jogo vai aprensentar, basta acrescentar o texto referente ao *game mode* pretendido na lista game_mode:
 <br/><br/>
 ```python
@@ -82,12 +82,12 @@ Sendo um *Button* cada um dos botões deve receber os seguintes parâmetros:
 * altura;
 * posição x;
 * posição y;
-* texto do *game mode*;
+* texto do *game mode*;</p>
 Ao entrar no loop, são criados os botões com base nas strings contidas na lista *game_mode* e os *Button*'s são realmente colocados na lista *button_set*:
 ```python
 button_set.append(Button(button_width, button_height, button_x, button_y, game_mode[<index>]))
 ```
-<sub>*A lista *button_set* contém, REALMENTE, os botões. Não é apenas uma lista de strings ou inteiros.*</sub>
+<sub>*A lista *button_set* contém, REALMENTE, os botões. Não é apenas uma lista de strings ou inteiros.*</sub></p>
 <sub>As strings passadas na lista *game_mode* serão, exatamente, os textos dos botões. 
 </sub><br/>
 Os botões são criados por ordem, guiados pela posição do primeiro, mantendo uma pequena distância entre si.
@@ -103,7 +103,8 @@ for button in button_set:
     button.draw_text(button_color)
     button.draw_button(button_color, 2)
 ```
-Feito isto, o programa verifica se algum botão é clicado, caso seja, entrará no modo de jogo definido. Caso o botão seja o 'Exit', o jogo irá encerrar.</p>
+Feito isto, o programa verifica se algum botão é clicado. Caso seja, entrará no modo de jogo definido.</p>
+Caso o botão seja o 'Exit', o jogo irá encerrar.</p>
 Caso seja passada na lista *game_mode* uma string que não contenha, pelo menos, dois números ou a string 'exit' o jogo irá fechar e apresentar uma mensagem de erro.</p>
 Segue o exemplo caso seja passado na lista a string 'pudim':
 ```
@@ -122,18 +123,19 @@ try:
 except IndexError:
     <imprime o erro referido acima>
 ```
-Não havendo nenhum erro, a função *in_game()* é chamada, e passa-se como parâmetro os valores guardados na lista *gm_list* que correspondem ao número de cartas na horizontal e vertical, respectivamente:
+Não havendo nenhum erro, a função *in_game()* é chamada, e passam-se como parâmetro os valores guardados na lista *gm_list* que correspondem ao número de cartas na horizontal e vertical, respectivamente:
 ```python
 gm_list = [[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
 ```
 ### [game_mode.py](https://github.com/JundMaster/projeto_final_fp/blob/master/game_mode.py)
 Este ficheiro contém a função que roda o modo de jogo selecionado: 
 `in_game(cards_hor, cards_vert)`.</p>
+#### Dimensões
 Inicialmente, esta função define o tamanho máximo do "tabuleiro" de cartas, tendo em conta o tamanho da janela de jogo:
-`board_width = display_width - display_width/6`
-`board_height = display_height - display_height/6`
-Em seguida, é definido a dimensão das cartas, que tem me conta o tamanho do tabuleiro desta vez.</p>
-E para que a dimensão das cartas fosse estéticamente agradável, inicialmente adotou-se um método para estabelecer primeiro a largura da carta e depois a altura, em função da largura. Mas isto só funcionava para casos em que o número de cartas horizontais fosse maior que o número de cartar verticais. Quando o caso era inverso, as cartas podiam ultrapassar o limite do tabuleiro, em termos de largura.</p>
+`board_width = display_width - display_width/6`</p>
+`board_height = display_height - display_height/6`</p>
+Em seguida, é definida a dimensão das cartas, que tem me conta o tamanho do tabuleiro desta vez.</p>
+E para que a dimensão das cartas fosse estéticamente agradável, inicialmente adotou-se um método para estabelecer primeiro a largura da carta e depois a altura (em função da largura). Mas isto só funcionava para casos em que o número de cartas horizontais fosse maior que o número de cartar verticais. Quando o caso era inverso, as cartas podiam ultrapassar o limite do tabuleiro, em termos de largura.</p>
 Para contornar esse problema, adotou-se a seguinte medida: 
 ```py
 if cards_vert > cards_hor:
@@ -143,10 +145,11 @@ else:
 ```
 Isto verifica em que caso nos encontramos - mais cartas na vertical (ou igual número de cartas) ou na horizontal. E assim define a dimensão das cartas, de modo a não se ultrapassar as medidas máximas do tabuleiro.</p>
 Tendo estabelecido a largura das cartas, o programa então define a distância que deverá haver entre as cartas, considerando a sua largura:
-`card_dist = card_width/15` 
+`card_dist = card_width/15`</p> 
 Desta forma, garantimos que, mesmo não havendo uma distância fixa estabelecida entre as cartas, ela sempre será proporcional à largura das mesmas, o que depende do número de cartas no ecrã.</p>
 Procede-se da mesma forma para a altura das cartas:
-`card_height = card_width*1.5`
+`card_height = card_width*1.5`</p>
+#### Cores e formas
 As formas que aparecem nas cartas são passadas numa lista de strings:
 ```py
 shape_list = ['square', 'circle', 'triangle']
