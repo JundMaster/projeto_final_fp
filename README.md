@@ -344,5 +344,15 @@ E como passo final, esta lista dá origem a uma outra lista, que irá conter tod
 ```
 E, por fim, esta lista sim pode ser usada passar os parâmetros da função `in_game()`
 ___
-
-
+#### save_score(score)
+Esta função cria um ficheiro de texto e salva nele a pontuação passada por parâmetro quando a função é chamada.</p>
+Os ficheiros ficam salvos com o seguinte formato:
+![alt text](/README_images/score_file.png)
+___
+#### get_score()
+A `get_score()` é usada para abrir o ficheiro de texto que foi criado pela função `save_score()` e encontrar nesse ficheiro a última pontuação registrada e a maior dessas pontuações.</p>
+Para isto, a função faz uma verificação muito semelhante à `get_gm_list()` e salva as pontuações lidas numa lista: `score_list`.</p>
+A função retorna então o último valor dessa lista e o maior valor também:
+```py
+return (score_list[-1], max(score_list))
+```
