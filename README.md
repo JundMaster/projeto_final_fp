@@ -130,7 +130,7 @@ gm_list = [[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
 ### [game_mode.py](https://github.com/JundMaster/projeto_final_fp/blob/master/game_mode.py)
 Este ficheiro contém a função que roda o modo de jogo selecionado: 
 `in_game(cards_hor, cards_vert)`.</p>
-#### Dimensões
+#### Dimensões:
 Inicialmente, esta função define o tamanho máximo do "tabuleiro" de cartas, tendo em conta o tamanho da janela de jogo:
 `board_width = display_width - display_width/6`</p>
 `board_height = display_height - display_height/6`</p>
@@ -149,7 +149,7 @@ Tendo estabelecido a largura das cartas, o programa então define a distância q
 Desta forma, garantimos que, mesmo não havendo uma distância fixa estabelecida entre as cartas, ela sempre será proporcional à largura das mesmas, o que depende do número de cartas no ecrã.</p>
 Procede-se da mesma forma para a altura das cartas:
 `card_height = card_width*1.5`</p>
-#### Cores e formas
+#### Cores e formas:
 As formas que aparecem nas cartas são passadas numa lista de strings:
 ```py
 shape_list = ['square', 'circle', 'triangle']
@@ -167,6 +167,10 @@ for j in shape_color:
     for i in shape_list:
         possible.append((i,j))
 ```
+A lista *possible* passa a guardar as formas e cores como túpulos, seguindo o seguinte formato:
+```
+possible = [('square', [0, 255, 255]), ('circle', [0, 255, 255]), ('triangle', [0, 255, 255]]
+```
 Como próximo passo, o programa verifica, com base na quantidade de cartas possíveis, é possível criar número de cartas que se pretende no *game mode* escolhido.</p>
 Caso não seja possível, o jogo fecha e a seguinte mensagem de texto é impressa na linha de comandos:
 ```
@@ -174,4 +178,37 @@ Caso não seja possível, o jogo fecha e a seguinte mensagem de texto é impress
 The game board has too many cards.
 You may try either creating new colors/shapes or reducing the amount of cards.
 ---------------------------------------------------------------------------------
+```
+#### Criação das cartas:
+Não ocorrendo nenhum erro, o programa cria uma lista que contém pares de cartas, com base na lista de cartas possíveis:
+```py
+for i in range (0, (cards_vert * cards_hor)//2):
+    game_deck.append(possible[i])
+    game_deck.append(possible[i])
+```
+E então baralha a ordem destas cartas:
+```
+random.shuffle(game_deck)
+```
+Feito isto, é criada então mais uma lista - *card_list* -, que vai conter, desta vez, as cartas propriamente ditas, isto é, as instânciações da classe *Card*.
+<sub>*A explicação da criação destas instânciações está num docstring no próprio ficheiro [game_mode.py](https://github.com/JundMaster/projeto_final_fp/blob/master/game_mode.py).*</sub></p>
+Considerando a possibilidade de se criar um *game mode* que não gere um número total de cartas par, como '3 x 3', adotou-se a seguinte medida:
+```py
+try:
+    card.draw_flip(game_deck[num][0], game_deck[num][1])
+except:
+    print("-"*30," E R R O R " + "-"*30 )
+    print(f'File "game_mode.py", line {line}\n')
+    print(f"'{cards_hor} x {cards_vert}' is not a valid game mode")
+    print("Try making a game mode that will generate a odd number of cards\n" + "-"*72)
+    exit()
+```
+Que irá sair do jogo e imprimir para a linha de comandos a seguinte mensagem:
+```
+------------------------------  E R R O R ------------------------------
+File "game_mode.py", line 146
+
+'3 x 3' is not a valid game mode
+Try making a game mode that will generate a odd number of cards
+------------------------------------------------------------------------
 ```
