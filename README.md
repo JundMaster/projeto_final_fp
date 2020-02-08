@@ -39,16 +39,12 @@ Para criar os botões que o jogo vai aprensentar, basta acrescentar o texto refe
 ```python
 game_mode = ['4 x 3', '4 x 4', '5 x 4', '6 x 5', '6 x 6','Exit']
 ```
-<br/><br/>
-*Esta lista deve conter SOMENTE strings.*
-<br/><br/>
+<br/><br/>*Esta lista deve conter SOMENTE strings.*<br/><br/>
 Uma vez que esta lista está criada, é invocada a função *get_gm_list()* que vai converter toda essa lista de strings, para uma lista de inteiros:
 ```
 gm_list = [[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
 ```
-<br/><br/>
-*Esta função vai explicada mais à frente.*
-<br/><br/>
+<br/><br/>*Esta função vai explicada mais à frente.*<br/><br/>
 Sendo esta uma lista de inteiros, o conteúdo do botão 'Exit é ignorado e deixado de fora desta lista.
 A função chega então a um loop, que irá criar realmente os botões.
 Cada botão é uma instância da classe *Button* (também será melhor explicada adiante).
@@ -62,11 +58,9 @@ Ao entrar no loop, são criados os botões com base nas strings contidas na list
 ```python
 button_set.append(Button(button_width, button_height, button_x, button_y, game_mode[<index>]))
 ```
-<sub>*A lista *button_set* contém, REALMENTE, os botões. Não é apenas uma lista de strings ou inteiros.*</sub>
-<br/><br/>
+<sub>*A lista *button_set* contém, REALMENTE, os botões. Não é apenas uma lista de strings ou inteiros.*</sub><br/><br/>
 <sub>As strings passadas na lista *game_mode* serão, exatamente, os textos dos botões. 
-</sub>
-
+</sub><br/><br/>
 Os botões são criados por ordem, guiados pela posição do primeiro, mantendo uma pequena distância entre si.
 O botão 'Exit' é o único que é tratado de forma diferente. Ele deve ser o ÚLTIMO da lista *game_mode* e o seu texto deverá conter de alguma forma as letras ['E', 'X', 'I', 'T'], nesta ordem, para que seja atribuída uma distância um pouco maior entre ele e o botão anterior.
 Posteriormente, a função trata verificar a colisão do mouse com o botão, e pinta-o de acordo e também imprime a string passada na lista *game_mode* no botão:
