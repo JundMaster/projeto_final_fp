@@ -190,7 +190,7 @@ E então baralha a ordem destas cartas:
 ```
 random.shuffle(game_deck)
 ```
-Feito isto, é criada então mais uma lista - *card_list* -, que vai conter, desta vez, as cartas propriamente ditas, isto é, as instânciações da classe *Card*.
+Feito isto, é criada então mais uma lista - *card_list* -, que vai conter, desta vez, as cartas propriamente ditas, isto é, as instânciações da classe *Card*.</p>
 <sub>*A explicação da criação destas instânciações está num docstring no próprio ficheiro [game_mode.py](https://github.com/JundMaster/projeto_final_fp/blob/master/game_mode.py).*</sub></p>
 Considerando a possibilidade de se criar um *game mode* que não gere um número total de cartas par, como '3 x 3', adotou-se a seguinte medida:
 ```py
@@ -203,7 +203,7 @@ except:
     print("Try making a game mode that will generate a odd number of cards\n" + "-"*72)
     exit()
 ```
-Que irá sair do jogo e imprimir para a linha de comandos a seguinte mensagem:
+Isto irá sair do jogo e imprimir para a linha de comandos a seguinte mensagem:
 ```
 ------------------------------  E R R O R ------------------------------
 File "game_mode.py", line 146
@@ -212,3 +212,57 @@ File "game_mode.py", line 146
 Try making a game mode that will generate a odd number of cards
 ------------------------------------------------------------------------
 ```
+#### Lógica do jogo:
+Para entender como a lógica foi estruturada, há que atentar para as seguintes variáveis:
+* flipped_cards_num
+* flipped_cards_list
+* clickable
+* card.selected
+* flipped_time
+* flips
+* card_color
+* score
+
+`flipped_cards_num` trata-se do número de cartas que estão viradas com a face para cima.</p>
+`flipped_cards_list` é uma lista que contém as cartas que foram viradas.</p>
+`card.selected` é uma variável associada ao objeto *card*, que define se a carta encontra-se selecionada ou não
+`clickable` é uma variável booleana que define se a é possível clicar ou não nas cartas.</p>
+`flipped_time` conta o tempo que se passou desde que duas cartas foram viradas.</p>
+`flips` registra o número de vezes que o jogador tentou encontrar um par de cartas sem ter sucesso.</p>
+`card_color` trata-se da cor da carta.</p>
+`score` é a pontuação do jogador.</p>
+___
+O primeiro passo para desenhar as cartas, é verificar se cada carta está ou não selecionada, através da variável *selected*, da classe *Card*.</p>
+Se o programa verificar que a carta não esta selecionada, ele avança para o passo seguinte:</p>
+Verificar se o mouse está a colidir com a carta:</p>
+* Caso esteja a colidir a carta é pintada de branco, senão, deve ser pintada de verde;
+* Verificar se é possível clicar nas cartas através da variável *clickable*:
+    Se as carta forem "clickable", for feito um click sobre uma carta e o usuário levantar o botão do rato, o programa avançará para o passo seguinte:
+    * Incrementa o número de cartas viradas em uma unidade:</p>
+    `flipped_cards_num += 1`</p>
+    * Adiciona a carta clicada à lista de cartas viradas:</p>
+    `flipped_cards_list.append(card)`</p>
+    * Passa a carta para "selected":</p>
+    `card.selected = True`</p>
+    * Toca o som da carta a virar:</p>
+    `flip_sound.play()`</p>
+    * Verifica quantas cartas já foram viradas e caso o número seja 2, incrementa o número de tentativas em 1 unidade e torna as cartas não clicáveis:</p>
+    `flips += 1`</p>
+    `clickable = False`</p>
+
+Uma vez que a carta estiver "selected", o programa irá deixar de verificar a colisão afim de desenhar a parte de trás da carta como verde ou branco.</p>
+O que irá acontecer agora é desenhar a forma da carta (com a sua respectiva cor) e pintar o *outline* de branco, caso o rato esteja a colidir com a carta, ou da cor da forma caso não esteja.</p>
+A partir do momento em que duas cartas estiverem selecionadas, a variável *fliped_card_num* irá assumir o valor 2, que é um gatilho para algumas ações ocorrerem:
+* Nenhuma das cartas do tabuleiro será clicável;
+* O número de tentativas é incrementado em 1 unidade;
+* A variável *fliped_time* aumenta uma unidade a cada segundo;
+  * Assim que esta variável atinge o valor 2 ou superior, a função *card_check()* é chamada, e verifica se as duas últimas cartas acrescentadas à lista de cartas viradas tem cor e forma correspondente.
+    * Caso tenham o *score* aumenta em 100 unidades, o número de tentativas (*flips*) volta a ser 0 e as cartas são removidas da lista de cartas selecionadas.
+    * Caso contrário, ambas as cartas selecionadas passam a estar "não selecionadas", e o jogador recebe uma penalização na pontuação tendo em conta o número de tentativas que realizou até o momento.
+  * Independentemente do retorno da função *card_check()*, todas as cartas do tabuleiro passam a ser "clicáveis" novamente: `clickable = True`; o contador de tempo volta a zero: `flipped_time = 0` e o número de cartas viradas também volta a zero: `flipped_cards_num = 0`;</p>
+  
+
+
+
+___
+
