@@ -297,3 +297,52 @@ shape_list = ['square', 'circle', 'triangle']
 * Passar a cor da forma;
 
 Posteriormente o programa irá reconhecer o formato e cor passados como parâmetro e desenhá-los quando a função for invocada.
+
+### [functions.py](https://github.com/JundMaster/projeto_final_fp/blob/master/functions.py)
+Este ficheiro contém todas as funções do jogo, com exceção da `game_menu()` e da `in_game()`.</p>
+Todas estas funções estavam, inicialmente, nos próprios ficheiros em que haviam de ser necessárias. Todavida, optou-se por colocá-las num ficheiro à parte pelo bem da legibilidade e organização do código.
+A função mais complexa que está aqui definida, é a `get_gm_list(game_mode)`.
+#### get_gm_list(game_mode)
+O objetivo desta função é receber uma lista de strings e procurar por, pelo menos, dois números, em cada string e depois retornar a string recebida como uma lista de inteiros.</p>
+Exemplo:
+```py
+game_mode = ['4 x 3']
+get_gm_list(game_mode) = [4, 3]
+```
+Para fazer isto, a função deve percorrer a string com dois loops:
+```py
+for j in range (0, len(game_mode)):
+    for i in range (0, len(game_mode[j])):
+```
+O primeiro para percorrer a lista passada como parâmetro, e o segundo para percorrer cada uma das strings da lista.</p>
+Então verifica-se se o elemento da string que está a ser percorrido naquele momento é um número e adiciona-o a uma lista chamada `number`:
+```py
+if game_mode[j][i].isdigit():
+    number.append(str(game_mode[j][i]))
+```
+Caso um elemento da string não seja um digito, o função entrará na seguinte condição:
+```py
+elif number:
+    temp_list.append(number)
+    number = []
+```
+Isto faz com que a lista `number` seja guardada numa lista chamada `temp_list`.</p>
+Deste modo, a `temp_list` vai guardando listas de strings que são digitos.</p>
+Então a lista `number` volta a estar fazia, para poder guardar mais números.</p>
+Ao sair deste loop, entra-se em outro loop onde a lista de strings `temp_list` vai dar origem a uma lista de inteiros: `mode_list`.</p>
+Então, ao invés de se ter uma lista com o formato:
+```py
+[['4'], ['3'], ['4'], ['4'], ['5'], ['4'], ['6'], ['5'], ['6'], ['6']]
+```
+Tem-se uma no formato:
+```py
+[4, 3, 4, 4, 5, 4, 6, 5, 6, 6]
+```
+E como passo final, esta lista dá origem a uma outra lista, que irá conter todos esses inteiros agrupados de dois em dois. Passa-se então a ter uma lista no formato:
+```py
+[[4, 3], [4, 4], [5, 4], [6, 5], [6, 6]]
+```
+E, por fim, esta lista sim pode ser usada passar os parâmetros da função `in_game()`
+___
+
+
